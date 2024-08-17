@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode } from 'react'
+import type { AppProps } from 'next/app'
 import { Web3ReactProvider } from '@web3-react/core'
 import { MetaMask } from "@web3-react/metamask"
 import { hooks as metaMaskHooks, metaMask } from '../metaMask'
@@ -9,18 +9,12 @@ const connectors: [MetaMask, typeof metaMaskHooks][] = [
   [metaMask, metaMaskHooks],
 ]
 
-export default function RootLayout({
-  children,
-}: {
-  children: ReactNode
-}) {
+function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <html lang="en">
-      <body>
-        <Web3ReactProvider connectors={connectors}>
-          {children}
-        </Web3ReactProvider>
-      </body>
-    </html>
+    <Web3ReactProvider connectors={connectors}>
+      <Component {...pageProps} />
+    </Web3ReactProvider>
   )
 }
+
+export default MyApp
